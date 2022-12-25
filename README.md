@@ -11,3 +11,7 @@ Unfortunately DEV does not have a special way to indicate the language of the po
 * People who have multiple posts in the last hour (or short period of time) - SPAM?
 * People who have posted very soon (within minutes) of signing up - SPAM ?
 
+* Show date of post and how much time has passed since it was posted.
+* Higlight the ones that have multiple posts and several ones created in the last 100
+
+* See how much overlap we have between the  items fetched now and the one we already had
