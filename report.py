@@ -16,11 +16,15 @@ def collect(host, limit):
     get_recent_articles(host, data)
     update_authors(host, limit)
 
-def fetch(url):
+def fetch(host, url):
     print(url)
     headers = {'Accept': 'application/vnd.forem.api-v1+json'}
 
-    api_key = os.environ.get('FOREM_API_KEY')
+    url = f"https://{host}{url}"
+
+    if host == 'dev.to':
+        api_key = os.environ.get('DEV_TO_API_KEY')
+
     if api_key:
         headers['api-key'] = api_key
 
@@ -54,9 +58,9 @@ def update_authors(host, limit):
                 if user["article_count"] > 20:
                     continue
 
-        user = fetch(f'https://{host}/api/users/{uid}')
+        user = fetch(host, f'/api/users/{uid}')
         #print(user)
-        user_articles = fetch(f'https://{host}/api/articles?username={username}&page=1&per_page={per_page}')
+        user_articles = fetch(host, f'/api/articles?username={username}&page=1&per_page={per_page}')
         time.sleep(1)
         #print(len(user_articles))
         user["article_count"] = len(user_articles)
@@ -70,7 +74,7 @@ def update_authors(host, limit):
 def get_recent_articles(host, data):
     per_page = 100
 
-    articles = fetch(f'https://{host}/api/articles/latest?page=1&per_page={per_page}')
+    articles = fetch(host, f'/api/articles/latest?page=1&per_page={per_page}')
 
     print(f"Number of elements in response: {len(articles)}")
     if len(articles) == 0:
