@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
     <title>Recent</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://use.fontawesome.com/57525b30bb.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Rashi+Hebrew&display=swap" rel="stylesheet">
   </head>
@@ -16,9 +15,10 @@
 
         <h2 id="articles">Articles</h2>
         {% for article in articles %}
-        <div class="article">
-            <a href="{{article.url}}">{{article.title}}</a><br>
-            <a href="http://dev.to/{{article.user.username}}">({{article.user.username}})</a> Joined:
+        <div class="box article">
+            <h5 class="title is-5"><a href="{{article.url}}">{{article.title}}</a></h5>
+            <a href="http://dev.to/{{article.user.username}}">({{article.user.username}})</a> Joined: {{article.usr.joined_at}}
+            Article count: {{article.usr.article_count}}
         </div>
         {% endfor %}
 
