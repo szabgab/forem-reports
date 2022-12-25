@@ -20,6 +20,10 @@ def fetch(url):
     print(url)
     headers = {'Accept': 'application/vnd.forem.api-v1+json'}
 
+    api_key = os.environ.get('FOREM_API_KEY')
+    if api_key:
+        headers['api-key'] = api_key
+
     res = requests.get(url, headers = headers)
     if res.status_code != 200:
         print(f"Failed request. Status code {res.status_code}")
@@ -53,6 +57,7 @@ def update_authors(host, limit):
         user = fetch(f'https://{host}/api/users/{uid}')
         #print(user)
         user_articles = fetch(f'https://{host}/api/articles?username={username}&page=1&per_page={per_page}')
+        time.sleep(1)
         #print(len(user_articles))
         user["article_count"] = len(user_articles)
 
