@@ -79,8 +79,18 @@ def generate_html():
     print("generate_html")
 
     data = pathlib.Path.cwd().joinpath('data')
+    users = data.joinpath('users')
+
     with open(data.joinpath('articles.json')) as fh:
         articles = json.load(fh)
+    for article in articles:
+        uid = article["user"]["user_id"]
+        user_file = users.joinpath(f"{uid}.json")
+        if user_file.exists():
+            with user_file.open() as fh:
+                article["usr"] = json.load(fh)
+        else:
+            article["usr"] = {}
 
     html = pathlib.Path.cwd().joinpath('_site')
     if not html.exists():
