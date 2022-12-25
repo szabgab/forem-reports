@@ -63,7 +63,7 @@ def update_authors(host, limit):
             break
 
 def get_recent_articles(host, data):
-    per_page = 10
+    per_page = 100
 
     articles = fetch(f'https://{host}/api/articles/latest?page=1&per_page={per_page}')
 

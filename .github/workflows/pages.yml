@@ -4,6 +4,8 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    - cron: '04 * * * *'
 
 permissions:
   contents: write
@@ -23,7 +25,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Build
-        run: python report.py --collect --host dev.to --html
+        run: python report.py --collect --host dev.to --html --limit  100
 
       - name: Commit new page
         run: |
