@@ -6,7 +6,7 @@ import time
 import pathlib
 from jinja2 import Environment, FileSystemLoader
 
-def collect(host, limit):
+def collect(host, limit, sleep):
     print(f"collect({host}, {limit})")
 
     data = pathlib.Path.cwd().joinpath('data')
@@ -14,7 +14,7 @@ def collect(host, limit):
         data.mkdir()
     print(f"Data dir: {data}")
     get_recent_articles(host, data)
-    update_authors(host, limit)
+    update_authors(host, limit, sleep)
 
 def fetch(host, url):
     print(url)
@@ -36,7 +36,7 @@ def fetch(host, url):
     return res.json()
 
 
-def update_authors(host, limit):
+def update_authors(host, limit, sleep):
     data = pathlib.Path.cwd().joinpath('data')
     with open(data.joinpath('articles.json')) as fh:
         articles = json.load(fh)
@@ -61,7 +61,7 @@ def update_authors(host, limit):
         user = fetch(host, f'/api/users/{uid}')
         #print(user)
         user_articles = fetch(host, f'/api/articles?username={username}&page=1&per_page={per_page}')
-        time.sleep(1)
+        time.sleep(sleep)
         #print(len(user_articles))
         user["article_count"] = len(user_articles)
 
@@ -119,8 +119,9 @@ def generate_html():
 
 def get_args():
     main_parser = argparse.ArgumentParser(add_help=False)
-    main_parser.add_argument('--html',      help='Generate the HTML report', action='store_true')
-    main_parser.add_argument('--collect',   help='Get the data from the Forem API', action='store_true')
+    main_parser.add_argument('--html',    help='Generate the HTML report', action='store_true')
+    main_parser.add_argument('--collect', help='Get the data from the Forem API', action='store_true')
+    main_parser.add_argument('--sleep',   help='How much to sleep between calls', type=int, default=0)
     main_args, _ = main_parser.parse_known_args()
     if not main_args.html and not main_args.collect:
         main_parser.print_help()
@@ -143,7 +144,7 @@ def main():
         hosts = ('dev.to', 'community.codenewbie.org')
         if args.host not in hosts:
             exit('Invalid host')
-        collect(args.host, args.limit)
+        collect(args.host, args.limit, args.sleep)
 
     if args.html:
         generate_html()
