@@ -1,3 +1,4 @@
+import datetime
 import requests
 import os
 import json
@@ -86,6 +87,8 @@ def get_recent_articles(host, data):
 
 def generate_html():
     print("generate_html")
+    now = datetime.datetime.now(datetime.timezone.utc)
+    # print(now)
 
     data = pathlib.Path.cwd().joinpath('data')
     users = data.joinpath('users')
@@ -93,6 +96,10 @@ def generate_html():
     with open(data.joinpath('articles.json')) as fh:
         articles = json.load(fh)
     for article in articles:
+        #print(article["published_at"]) # "2022-12-25T16:44:28Z"
+        ts = datetime.datetime.strptime(f'{article["published_at"][0:-1]}+0000', '%Y-%m-%dT%H:%M:%S%z')
+        elapsed_time = now-ts
+        article["elapsed_time"] = elapsed_time
         uid = article["user"]["user_id"]
         user_file = users.joinpath(f"{uid}.json")
         if user_file.exists():
