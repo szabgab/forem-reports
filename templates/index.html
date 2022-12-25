@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>Recent</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://use.fontawesome.com/57525b30bb.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Rashi+Hebrew&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <section id="main-section" class="section">
+      <div class="container">
+        <h1>DEV.to Report</h1>
+
+        <h2 id="articles">Articles</h2>
+        {% for article in articles %}
+        <div class="article">
+            <a href="{{article.url}}">{{article.title}}</a><br>
+            <a href="http://dev.to/{{article.user.username}}">({{article.user.username}})</a> Joined:
+        </div>
+        {% endfor %}
+
+        <h2 id="tags">Tags</h2>
+      </div>
+    </section>
+
+<script>
+  const { createApp } = Vue
+
+  createApp({
+    data() {
+      return {
+        message: 'Hello Vue!'
+      }
+    }
+  }).mount('#app')
+</script>
+
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      Created by <a href="https://dev.to/szabgab/">Gabor Szabo</a>. Source code and instructions in <a href="https://github.com/szabgab/forem-author-stats">GitHub</a>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
+
