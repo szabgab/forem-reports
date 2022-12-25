@@ -98,23 +98,12 @@ def generate_html():
     with open(html.joinpath('index.html'), 'w') as fh:
         fh.write(html_content)
 
-
-def commit():
-    print("commit")
-
-    os.system("git config --global user.name 'Gabor Szabo'")
-    os.system("git config --global user.email 'gabor@szabgab.com'")
-    os.system("git add data/")
-    os.system("git commit -m 'Update collected data'")
-    os.system("git push")
-
 def get_args():
     main_parser = argparse.ArgumentParser(add_help=False)
-    main_parser.add_argument('--commit',    help='Commit the downloaded data to git', action='store_true')
     main_parser.add_argument('--html',      help='Generate the HTML report', action='store_true')
     main_parser.add_argument('--collect',   help='Get the data from the Forem API', action='store_true')
     main_args, _ = main_parser.parse_known_args()
-    if not main_args.commit and not main_args.html and not main_args.collect:
+    if not main_args.html and not main_args.collect:
         main_parser.print_help()
         exit()
 
@@ -136,9 +125,6 @@ def main():
         if args.host not in hosts:
             exit('Invalid host')
         collect(args.host, args.limit)
-
-    if args.commit:
-        commit()
 
     if args.html:
         generate_html()
