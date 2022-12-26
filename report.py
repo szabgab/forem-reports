@@ -88,6 +88,7 @@ def get_recent_articles(host, data):
 def generate_html():
     print("generate_html")
     now = datetime.datetime.now(datetime.timezone.utc)
+    today = now.replace(hour=0, minute=0, second=0, microsecond=0)
     # print(now)
 
     data = pathlib.Path.cwd().joinpath('data')
@@ -105,6 +106,14 @@ def generate_html():
         if user_file.exists():
             with user_file.open() as fh:
                 article["usr"] = json.load(fh)
+                joined_at = article["usr"]["joined_at"] # Aug 7, 2021
+                joined_ts = datetime.datetime.strptime(f"{joined_at} +0000", '%b %d, %Y %z')
+                #print(joined_ts)
+                diff = today-joined_ts
+                #print(diff)
+                #print(diff.days)
+                article["usr"]["days_since_signup"] = diff.days
+                #print(joined_ts.tzinfo)
         else:
             article["usr"] = {}
 
