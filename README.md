@@ -15,7 +15,14 @@ Showing most recent N=100 posts.
 
 ```
 Welcome to DEV!
-Unfortunately DEV does not have a special way to indicate the language of the post. However, it might be a good idea to indicate the language using the regular tags. Just as it is done by the [Spanish](https://dev.to/t/spanish) posts. It will help people locate other posts in the same language and it might encourage the developer of DEV to add a feature where one could indicate the language of their article.
+Unfortunately DEV does not have a special way to indicate the language of the post. However, it might be a good idea to indicate the language using the regular tags. It will help people locate other posts in the same language and it might encourage the developer of DEV to add a feature where one could indicate the language of their article.
+
+* [Arabic](https://dev.to/t/arabic) - mostly about arabic and not in arabic
+* [French](https://dev.to/t/french)
+* [German](https://dev.to/t/german)
+* [Hebrew](https://dev.to/t/hebrew) - only one post
+* [Portuguese](https://dev.to/t/portuguese)
+* [Spanish](https://dev.to/t/spanish)
 ```
 
 
