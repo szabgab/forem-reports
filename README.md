@@ -17,12 +17,27 @@ Showing most recent N=100 posts.
 Welcome to DEV!
 Unfortunately DEV does not have a special way to indicate the language of the post. However, it might be a good idea to indicate the language using the regular tags. It will help people locate other posts in the same language and it might encourage the developer of DEV to add a feature where one could indicate the language of their article.
 
-* [Arabic](https://dev.to/t/arabic) - mostly about arabic and not in arabic
+* [Arabic](https://dev.to/t/arabic) - mostly about Arabic and not in Arabic, RTL rendering does not work well
+* [Chinese](https://dev.to/t/chinese)
+* [Dutch](https://dev.to/t/dutch)
+* [Finnish](https://dev.to/t/finnish)
 * [French](https://dev.to/t/french)
 * [German](https://dev.to/t/german)
-* [Hebrew](https://dev.to/t/hebrew) - only one post
+* [Greek](https://dev.to/t/greek) - about Greek not in Greek
+* [Hebrew](https://dev.to/t/hebrew) - only one post, RTL rendering does not work well
+* [Hindi](https://dev.to/t/hindi) - however they use latin letters
+* [Italian](https://dev.to/t/italian)
+* [Japanese](https://dev.to/t/japanese)
+* [Korean](https://dev.to/t/korean)
+* [Polish](https://dev.to/t/polish)
 * [Portuguese](https://dev.to/t/portuguese)
+* [Romanian](https://dev.to/t/romanian)
 * [Spanish](https://dev.to/t/spanish)
+* [Swedish](https://dev.to/t/swedish) - only one post and even that is about Swedish and not in Swedish
+* [Thai](https://dev.to/t/thai)
+* [Turkish](https://dev.to/t/turkish)
+* [Vietnamese](https://dev.to/t/vietnamese)
+* [Ukrainian](https://dev.to/t/ukrainian)
 ```
 
 
