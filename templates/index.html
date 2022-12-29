@@ -30,6 +30,9 @@
             {% endif %}
             </div>
             <div>
+                {% for tag in article.tag_list %} <a href="https://dev.to/t/{{ tag }}" class="button">{{ tag }}</a> {% endfor %}
+            </div>
+            <div>
             Article count: {{article.usr.article_count}}
             </div>
         </div>
