@@ -46,12 +46,25 @@ def update_authors(host, limit, sleep):
         users.mkdir()
     per_page = 50
 
+    # likely spammers: people who have signed up in the last 2 days and have more than one post
+    # potential spammers or first time posters: people who have signed up in the last 2 days and have one post
+    # first time posters: people who signed up more than 2 days ago and have a total of 1 post anf it is among the most recent N posts
+
+    articles_by_author = {}
+
     for article in articles:
         limit -= 1
         #print(article["user"])
         uid = article["user"]["user_id"]
         username = article["user"]["username"]
         print(f"{username} {uid}")
+
+        if uid not in articles_by_author:
+            articles_by_author[uid] = []
+        articles_by_author[uid].append(article)
+        if len(articles_by_author[uid]) > 1:
+            continue
+
         user_file = users.joinpath(f'{uid}.json')
         if user_file.exists():
             with user_file.open() as fh:
