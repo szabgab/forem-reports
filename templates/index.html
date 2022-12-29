@@ -30,10 +30,11 @@
             {% endif %}
             </div>
             <div>
-                {% for tag in article.tag_list %} <a href="https://dev.to/t/{{ tag }}" class="button">{{ tag }}</a> {% endfor %}
+            Article count: {{article.usr.article_count}}
+                {% if article.usr.article_count < 2 %}<span class="has-background-success">First time author<span>{% endif %}
             </div>
             <div>
-            Article count: {{article.usr.article_count}}
+                {% for tag in article.tag_list %} <a href="https://dev.to/t/{{ tag }}" class="button">{{ tag }}</a> {% endfor %}
             </div>
         </div>
         {% endfor %}
