@@ -24,7 +24,9 @@
             Author: {{article.user.name}} <a href="http://dev.to/{{article.user.username}}">({{article.user.username}})</a>
             Joined: {{article.usr.joined_at}}
             {% if article.usr.days_since_signup <= 2 %}
-                <span class="has-background-danger">less than 2 days<span>
+                <span class="has-background-danger">less than 2 days ago<span>
+            {% else %}
+                ({{ article.usr.days_since_signup }} days ago)
             {% endif %}
             </div>
             <div>
