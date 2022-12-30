@@ -5,6 +5,7 @@ import json
 import argparse
 import time
 import pathlib
+import re
 from jinja2 import Environment, FileSystemLoader
 
 def collect(host, limit, sleep):
@@ -199,6 +200,7 @@ def generate_html(host, title):
         host     = host,
         title    = title,
     )
+    html_content = re.sub(r'^\s+', '', html_content, flags=re.MULTILINE)
 
     with open(html.joinpath('index.html'), 'w') as fh:
         fh.write(html_content)
