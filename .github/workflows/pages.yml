@@ -25,7 +25,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Build
-        run: python report.py --collect --host dev.to --stats --html --limit  100 --sleep 1
+        run: |
+          python report.py --collect --host dev.to --stats --html --limit  100 --sleep 1
+          python report.py --collect --host community.codenewbie.org --stats --html --limit  100 --sleep 1
 
       - name: Commit new page
         run: |
