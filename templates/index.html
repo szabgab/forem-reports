@@ -29,7 +29,8 @@
         <div class="box article">
             <h5 class="title is-5"><a href="{{article.url}}">{{article.title}}</a></h5>
             <div>
-            Published_at: {{article.published_at}} (elapsed time: {{article.elapsed_time.total_seconds()|int}} s)
+            Published_at: {{article.published_at}} (elapsed time: {{article.elapsed_time}})
+            <!-- (elapsed time: {{article.elapsed_time.total_seconds()|int}} s) -->
             </div>
             <div>
             Author: {{article.user.name}} <a href="http://dev.to/{{article.user.username}}">({{article.user.username}})</a>

@@ -159,6 +159,7 @@ def generate_html():
         #print(article["published_at"]) # "2022-12-25T16:44:28Z"
         ts = datetime.datetime.strptime(f'{article["published_at"][0:-1]}+0000', '%Y-%m-%dT%H:%M:%S%z')
         elapsed_time = now-ts
+        elapsed_time = elapsed_time - datetime.timedelta(microseconds=elapsed_time.microseconds)
         article["elapsed_time"] = elapsed_time
         uid = article["user"]["user_id"]
         user_file = users.joinpath(f"{uid}.json")
