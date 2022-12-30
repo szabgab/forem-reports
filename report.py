@@ -95,8 +95,10 @@ def get_recent_articles(host, data):
        return
     articles_file = data.joinpath('articles.json')
 
-    with open(data.joinpath('articles.json')) as fh:
-        articles = json.load(fh)
+    articles = []
+    if os.path.exists(articles_file):
+        with open(articles_file) as fh:
+            articles = json.load(fh)
 
     seen = set(article['id'] for article in articles)
     print(seen)
