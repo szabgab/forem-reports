@@ -11,13 +11,20 @@
   <body>
     <section id="main-section" class="section">
       <div class="container">
-        <h1>DEV.to Report</h1>
+        <h1 class="title">DEV.to Report</h1>
+        <div class="content">
+          <p>
+            Maintained by <a href="https://dev.to/szabgab/">Gabor Szabo</a>. Source code in <a href="https://github.com/szabgab/forem-reports">GitHub</a>.
+          </p>
+        </div>
 
-        <h2>Stats</h2>
+        <h2 class="title">Stats</h2>
+        <div class="content">
         <div>Number of new articles in the last hour: {{stats.last_hour}}</div>
         <div>Number of new articles in the last day: {{stats.last_day}}</div>
+        </div>
 
-        <h2 id="articles">Articles</h2>
+        <h2 class="title" id="articles">Recent articles</h2>
         {% for article in articles %}
         <div class="box article">
             <h5 class="title is-5"><a href="{{article.url}}">{{article.title}}</a></h5>
