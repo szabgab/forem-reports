@@ -44,4 +44,10 @@ Unfortunately DEV does not have a special way to indicate the language of the po
 * People who signed up in the last D=2 days and have more than N=3 posts. Likely SPAM
 * People who signed up in the last D=2 days and have posted. These can be either SPAM or we might want to welcome them.
 
+## API keys
+
+Get the API KEYS from and add them to the [action secrets](https://github.com/szabgab/forem-reports/settings/secrets/actions)
+
+* https://dev.to/settings/extensions
+* https://community.codenewbie.org/settings/extensions
 
