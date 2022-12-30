@@ -202,6 +202,7 @@ def get_args():
     main_parser.add_argument('--stats',   help='Generate stats', action='store_true')
     main_parser.add_argument('--collect', help='Get the data from the Forem API', action='store_true')
     main_parser.add_argument('--sleep',   help='How much to sleep between calls', type=int, default=0)
+    main_parser.add_argument('--host',    help='The hostname of the Forem site', required=True)
     main_args, _ = main_parser.parse_known_args()
     if not main_args.html and not main_args.collect and not main_args.stats:
         main_parser.print_help()
@@ -209,7 +210,6 @@ def get_args():
 
     parser = argparse.ArgumentParser(parents=[main_parser])
     if main_args.collect:
-        parser.add_argument('--host',      help='The hostname of the Forem site', required=main_args.collect)
         parser.add_argument('--limit',     help='Max number of people to check', type=int, default=2)
 
     args = parser.parse_args()
