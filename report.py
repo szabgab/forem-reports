@@ -26,10 +26,9 @@ def fetch(host, url):
     if host == 'dev.to':
         api_key = os.environ.get('DEV_TO_API_KEY')
     if host == 'community.codenewbie.org':
-        apit_key = os.environ.get('COMMUNITY_CODENEWBIE_ORG_API_KEY')
+        api_key = os.environ.get('COMMUNITY_CODENEWBIE_ORG_API_KEY')
 
-    if api_key:
-        headers['api-key'] = api_key
+    headers['api-key'] = api_key
 
     res = requests.get(url, headers = headers)
     if res.status_code != 200:
