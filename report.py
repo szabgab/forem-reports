@@ -87,15 +87,38 @@ def update_authors(host, limit, sleep):
 def get_recent_articles(host, data):
     per_page = 100
 
-    articles = fetch(host, f'/api/articles/latest?page=1&per_page={per_page}')
+    recent_articles = fetch(host, f'/api/articles/latest?page=1&per_page={per_page}')
 
-    print(f"Number of elements in response: {len(articles)}")
-    if len(articles) == 0:
+    print(f"Number of elements in response: {len(recent_articles)}")
+    if len(recent_articles) == 0:
        return
+    articles_file = data.joinpath('articles.json')
 
-    with open(data.joinpath('articles.json'), 'w') as fh:
-        json.dump(articles, fh)
+    with open(data.joinpath('articles.json')) as fh:
+        articles = json.load(fh)
+
+    seen = set(article['id'] for article in articles)
+    print(seen)
+
+    new_articles = []
+    for article in recent_articles:
+        if article['id'] in seen:
+            continue
+        new_articles.append(article)
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    articles_to_save = []
+    for article in new_articles + articles:
+        ts = datetime.datetime.strptime(f'{article["published_at"][0:-1]}+0000', '%Y-%m-%dT%H:%M:%S%z')
+        elapsed_time = now-ts
+        if elapsed_time.seconds < 60 * 60 * 24:
+            articles_to_save.append(article)
+
+    with open(articles_file, 'w') as fh:
+        json.dump(articles_to_save, fh)
     filename = time.strftime("stats-%Y-%m-%d--%H-%M-%S.json")
+
+    print(f"newly added articles: {len(new_articles)}")
 
 def update_stats():
     data = pathlib.Path.cwd().joinpath('data')
