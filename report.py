@@ -209,7 +209,6 @@ def get_args():
 
     parser = argparse.ArgumentParser(parents=[main_parser])
     if main_args.collect:
-        #parser.add_argument('--username',  help='The username on the Forem site', required=main_args.collect)
         parser.add_argument('--host',      help='The hostname of the Forem site', required=main_args.collect)
         parser.add_argument('--limit',     help='Max number of people to check', type=int, default=2)
 
