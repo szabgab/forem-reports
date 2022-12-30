@@ -181,6 +181,10 @@ def generate_html(host, title):
     if not html.exists():
         html.mkdir()
 
+    html = html.joinpath(host)
+    if not html.exists():
+        html.mkdir()
+
     template = 'index.html'
 
     templates_dir = pathlib.Path(__file__).parent.joinpath('templates')
@@ -191,6 +195,24 @@ def generate_html(host, title):
         stats    = stats,
         host     = host,
         title    = title,
+    )
+
+    with open(html.joinpath('index.html'), 'w') as fh:
+        fh.write(html_content)
+
+def generate_main_html(hosts):
+    #data = pathlib.Path.cwd().joinpath('data', host)
+
+    html = pathlib.Path.cwd().joinpath('_site')
+    if not html.exists():
+        html.mkdir()
+
+    template = 'main.html'
+    templates_dir = pathlib.Path(__file__).parent.joinpath('templates')
+    env = Environment(loader=FileSystemLoader(templates_dir), autoescape=True)
+    html_template = env.get_template(template)
+    html_content = html_template.render(
+        hosts = hosts,
     )
 
     with open(html.joinpath('index.html'), 'w') as fh:
@@ -234,6 +256,8 @@ def main():
 
     if args.html:
         generate_html(args.host, hosts[args.host])
+
+    generate_main_html(hosts)
 
 main()
 

@@ -1,0 +1,7 @@
+<h1>Forem sites</h2>
+
+<ul>
+{% for host in hosts.keys()  %}
+    <li><a href="/{{host}}/">{{hosts[host]}}</a></li>
+{% endfor %}
+</ul>
