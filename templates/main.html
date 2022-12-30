@@ -1,7 +1,11 @@
-<h1>Forem sites</h2>
+{% include 'header.html' %}
 
-<ul>
+<h1 class="title">Forem sites</h1>
+
 {% for host in hosts.keys()  %}
-    <li><a href="/{{host}}/">{{hosts[host]}}</a></li>
+  <div class="box article">
+    <a href="/{{host}}/">{{hosts[host]}}</a>
+  </div>
 {% endfor %}
-</ul>
+
+{% include 'footer.html' %}

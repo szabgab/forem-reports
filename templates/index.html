@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-    <title>Recent on {{title}}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <script src="https://use.fontawesome.com/57525b30bb.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Rashi+Hebrew&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <section id="main-section" class="section">
-      <div class="container">
+{% include 'header.html' %}
+
         <h1 class="title">{{title}} Report</h1>
-        <div class="content">
-          <p>
-            Maintained by <a href="https://dev.to/szabgab/">Gabor Szabo</a>. Source code in <a href="https://github.com/szabgab/forem-reports">GitHub</a>.
-          </p>
-        </div>
+        <a href="/">Home</a>
+{% include 'byline.html' %}
 
         <h2 class="title">Stats</h2>
         <div class="content">
@@ -56,13 +42,5 @@
       </div>
     </section>
 
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      Created by <a href="https://dev.to/szabgab/">Gabor Szabo</a>. Source code in <a href="https://github.com/szabgab/forem-reports">GitHub</a>.
-    </p>
-  </div>
-</footer>
-  </body>
-</html>
+{% include 'footer.html' %}
 
