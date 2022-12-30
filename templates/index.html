@@ -43,7 +43,8 @@
             </div>
             <div class="content">
             Article count: {{article.usr.article_count}}
-                {% if article.usr.article_count < 2 %}<span class="tag is-success">First time author<span>{% endif %}
+                {% if article.usr.article_count < 2 %}<span class="tag is-success">First time author</span>{% endif %}
+                {% if article.usr.article_count >= 2 and article.usr.days_since_signup <= 2 %}<span class="tag is-danger">More than 1 post by new member</span>{% endif %}
             </div>
             <div class="content">
                 {% for tag in article.tag_list %} <a href="https://dev.to/t/{{ tag }}" class="button">{{ tag }}</a> {% endfor %}
