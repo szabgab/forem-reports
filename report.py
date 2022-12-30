@@ -149,6 +149,10 @@ def generate_html():
     data = pathlib.Path.cwd().joinpath('data')
     users = data.joinpath('users')
 
+    with open(data.joinpath('stats.json')) as fh:
+        all_stats = fh.readlines()
+    stats = json.loads(all_stats[-1])
+
     with open(data.joinpath('articles.json')) as fh:
         articles = json.load(fh)
     for article in articles:
@@ -183,6 +187,7 @@ def generate_html():
     html_template = env.get_template(template)
     html_content = html_template.render(
         articles = articles,
+        stats    = stats,
     )
 
     with open(html.joinpath('index.html'), 'w') as fh:

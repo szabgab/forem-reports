@@ -13,6 +13,10 @@
       <div class="container">
         <h1>DEV.to Report</h1>
 
+        <h2>Stats</h2>
+        <div>Number of new articles in the last hour: {{stats.last_hour}}</div>
+        <div>Number of new articles in the last day: {{stats.last_day}}</div>
+
         <h2 id="articles">Articles</h2>
         {% for article in articles %}
         <div class="box article">
