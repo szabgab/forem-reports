@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-    <title>Recent</title>
+    <title>Recent on {{title}}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="https://use.fontawesome.com/57525b30bb.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Rashi+Hebrew&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
   <body>
     <section id="main-section" class="section">
       <div class="container">
-        <h1 class="title">DEV.to Report</h1>
+        <h1 class="title">{{title}} Report</h1>
         <div class="content">
           <p>
             Maintained by <a href="https://dev.to/szabgab/">Gabor Szabo</a>. Source code in <a href="https://github.com/szabgab/forem-reports">GitHub</a>.
@@ -33,7 +33,7 @@
             <!-- (elapsed time: {{article.elapsed_time.total_seconds()|int}} s) -->
             </div>
             <div>
-            Author: {{article.user.name}} <a href="http://dev.to/{{article.user.username}}">({{article.user.username}})</a>
+            Author: {{article.user.name}} <a href="http://{{host}}/{{article.user.username}}">({{article.user.username}})</a>
             Joined: {{article.usr.joined_at}}
             {% if article.usr.days_since_signup <= 2 %}
                 <span class="tag is-danger">less than 2 days ago<span>
@@ -47,7 +47,7 @@
                 {% if article.usr.article_count >= 2 and article.usr.days_since_signup <= 2 %}<span class="tag is-danger">More than 1 post by new member</span>{% endif %}
             </div>
             <div class="content">
-                {% for tag in article.tag_list %} <a href="https://dev.to/t/{{ tag }}" class="button">{{ tag }}</a> {% endfor %}
+                {% for tag in article.tag_list %} <a href="https://{{host}}/t/{{ tag }}" class="button">{{ tag }}</a> {% endfor %}
             </div>
         </div>
         {% endfor %}
@@ -59,7 +59,7 @@
 <footer class="footer">
   <div class="content has-text-centered">
     <p>
-      Created by <a href="https://dev.to/szabgab/">Gabor Szabo</a>. Source code and instructions in <a href="https://github.com/szabgab/forem-reports">GitHub</a>
+      Created by <a href="https://dev.to/szabgab/">Gabor Szabo</a>. Source code in <a href="https://github.com/szabgab/forem-reports">GitHub</a>.
     </p>
   </div>
 </footer>

@@ -140,7 +140,7 @@ def update_stats():
     with open(data.joinpath('stats.json'), 'a') as fh:
         fh.write(f"{line}\n")
 
-def generate_html():
+def generate_html(host, title):
     print("generate_html")
     now = datetime.datetime.now(datetime.timezone.utc)
     today = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -189,6 +189,8 @@ def generate_html():
     html_content = html_template.render(
         articles = articles,
         stats    = stats,
+        host     = host,
+        title    = title,
     )
 
     with open(html.joinpath('index.html'), 'w') as fh:
@@ -228,7 +230,8 @@ def main():
         update_stats()
 
     if args.html:
-        generate_html()
+        for host in ['dev.to']:
+            generate_html(host, 'DEV.to')
 
 main()
 
