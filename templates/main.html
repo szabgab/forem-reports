@@ -2,10 +2,25 @@
 
 <h1 class="title">Forem sites</h1>
 
-{% for host in hosts.keys()  %}
-  <div class="box article">
-    <a href="/{{host}}/">{{hosts[host]}}</a>
-  </div>
-{% endfor %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Host</th>
+      <th>Last hour</th>
+      <th>Last day</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for host in hosts.keys()  %}
+    <tr>
+      <th><a href="/{{host}}/">{{hosts[host]}}</a></th>
+      <th>{{stats[host].last_hour}}</th>
+      <th>{{stats[host].last_day}}</th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% include 'footer.html' %}

@@ -206,11 +206,17 @@ def generate_html(host, title):
         fh.write(html_content)
 
 def generate_main_html(hosts):
-    #data = pathlib.Path.cwd().joinpath('data', host)
 
     html = pathlib.Path.cwd().joinpath('_site')
     if not html.exists():
         html.mkdir()
+
+    stats = {}
+    for host in hosts.keys():
+        data = pathlib.Path.cwd().joinpath('data', host)
+        with data.joinpath('stats.json').open() as fh:
+            lines = fh.readlines()
+        stats[host] = json.loads(lines[-1])
 
     template = 'main.html'
     templates_dir = pathlib.Path(__file__).parent.joinpath('templates')
@@ -218,6 +224,7 @@ def generate_main_html(hosts):
     html_template = env.get_template(template)
     html_content = html_template.render(
         hosts = hosts,
+        stats = stats,
     )
 
     with open(html.joinpath('index.html'), 'w') as fh:
