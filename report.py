@@ -10,7 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 def collect(host, limit, sleep):
     print(f"collect({host}, {limit})")
 
-    data = pathlib.Path.cwd().joinpath('data')
+    data = pathlib.Path.cwd().joinpath('data', host)
     if not data.exists():
         data.mkdir()
     print(f"Data dir: {data}")
@@ -37,7 +37,7 @@ def fetch(host, url):
     return res.json()
 
 def update_authors(host, limit, sleep):
-    data = pathlib.Path.cwd().joinpath('data')
+    data = pathlib.Path.cwd().joinpath('data', host)
     with open(data.joinpath('articles.json')) as fh:
         articles = json.load(fh)
     users = data.joinpath('users')
@@ -120,8 +120,8 @@ def get_recent_articles(host, data):
 
     print(f"newly added articles: {len(new_articles)}")
 
-def update_stats():
-    data = pathlib.Path.cwd().joinpath('data')
+def update_stats(host):
+    data = pathlib.Path.cwd().joinpath('data', host)
     with open(data.joinpath('articles.json')) as fh:
         articles = json.load(fh)
     last_hour = 0
@@ -146,7 +146,7 @@ def generate_html(host, title):
     today = now.replace(hour=0, minute=0, second=0, microsecond=0)
     # print(now)
 
-    data = pathlib.Path.cwd().joinpath('data')
+    data = pathlib.Path.cwd().joinpath('data', host)
     users = data.joinpath('users')
 
     with open(data.joinpath('stats.json')) as fh:
@@ -227,7 +227,7 @@ def main():
         collect(args.host, args.limit, args.sleep)
 
     if args.stats:
-        update_stats()
+        update_stats(args.host)
 
     if args.html:
         for host in ['dev.to']:
