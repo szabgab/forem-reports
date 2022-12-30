@@ -218,19 +218,22 @@ def get_args():
 
 def main():
     args = get_args()
+    hosts = {
+        'dev.to':                    'DEV.to',
+        'community.codenewbie.org': 'CodeNewbie',
+    }
+
+    if args.host not in hosts:
+        exit('Invalid host')
 
     if args.collect:
-        hosts = ('dev.to', 'community.codenewbie.org')
-        if args.host not in hosts:
-            exit('Invalid host')
         collect(args.host, args.limit, args.sleep)
 
     if args.stats:
         update_stats(args.host)
 
     if args.html:
-        for host in ['dev.to']:
-            generate_html(host, 'DEV.to')
+        generate_html(args.host, hosts[args.host])
 
 main()
 
