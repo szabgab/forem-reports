@@ -35,16 +35,16 @@
             Author: {{article.user.name}} <a href="http://dev.to/{{article.user.username}}">({{article.user.username}})</a>
             Joined: {{article.usr.joined_at}}
             {% if article.usr.days_since_signup <= 2 %}
-                <span class="has-background-danger">less than 2 days ago<span>
+                <span class="tag is-danger">less than 2 days ago<span>
             {% else %}
                 ({{ article.usr.days_since_signup }} days ago)
             {% endif %}
             </div>
-            <div>
+            <div class="content">
             Article count: {{article.usr.article_count}}
-                {% if article.usr.article_count < 2 %}<span class="has-background-success">First time author<span>{% endif %}
+                {% if article.usr.article_count < 2 %}<span class="tag is-success">First time author<span>{% endif %}
             </div>
-            <div>
+            <div class="content">
                 {% for tag in article.tag_list %} <a href="https://dev.to/t/{{ tag }}" class="button">{{ tag }}</a> {% endfor %}
             </div>
         </div>
