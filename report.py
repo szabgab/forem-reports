@@ -36,7 +36,6 @@ def fetch(host, url):
         exit(1)
     return res.json()
 
-
 def update_authors(host, limit, sleep):
     data = pathlib.Path.cwd().joinpath('data')
     with open(data.joinpath('articles.json')) as fh:
@@ -86,7 +85,7 @@ def update_authors(host, limit, sleep):
             break
 
 def get_recent_articles(host, data):
-    per_page = 100
+    per_page = 500
 
     articles = fetch(host, f'/api/articles/latest?page=1&per_page={per_page}')
 
@@ -97,6 +96,26 @@ def get_recent_articles(host, data):
     with open(data.joinpath('articles.json'), 'w') as fh:
         json.dump(articles, fh)
     filename = time.strftime("stats-%Y-%m-%d--%H-%M-%S.json")
+
+def update_stats():
+    data = pathlib.Path.cwd().joinpath('data')
+    with open(data.joinpath('articles.json')) as fh:
+        articles = json.load(fh)
+    last_hour = 0
+    last_day = 0
+    now = datetime.datetime.now(datetime.timezone.utc)
+    for article in articles:
+        ts = datetime.datetime.strptime(f'{article["published_at"][0:-1]}+0000', '%Y-%m-%dT%H:%M:%S%z')
+        elapsed_time = now-ts
+        #print(elapsed_time)
+        if elapsed_time.seconds < 60 * 60:
+            last_hour += 1
+        if elapsed_time.seconds < 60 * 60 * 24:
+            last_day += 1
+    print(f"last_hour: {last_hour} last_day: {last_day}")
+    line = json.dumps({'timestamp': str(now), 'last_hour': last_hour, 'last_day': last_day})
+    with open(data.joinpath('stats.json'), 'a') as fh:
+        fh.write(f"{line}\n")
 
 def generate_html():
     print("generate_html")
@@ -149,10 +168,11 @@ def generate_html():
 def get_args():
     main_parser = argparse.ArgumentParser(add_help=False)
     main_parser.add_argument('--html',    help='Generate the HTML report', action='store_true')
+    main_parser.add_argument('--stats',   help='Generate stats', action='store_true')
     main_parser.add_argument('--collect', help='Get the data from the Forem API', action='store_true')
     main_parser.add_argument('--sleep',   help='How much to sleep between calls', type=int, default=0)
     main_args, _ = main_parser.parse_known_args()
-    if not main_args.html and not main_args.collect:
+    if not main_args.html and not main_args.collect and not main_args.stats:
         main_parser.print_help()
         exit()
 
@@ -174,6 +194,9 @@ def main():
         if args.host not in hosts:
             exit('Invalid host')
         collect(args.host, args.limit, args.sleep)
+
+    if args.stats:
+        update_stats()
 
     if args.html:
         generate_html()
