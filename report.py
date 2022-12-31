@@ -233,22 +233,18 @@ def generate_main_html(hosts):
         fh.write(html_content)
 
 def get_args():
-    main_parser = argparse.ArgumentParser(add_help=False)
-    main_parser.add_argument('--html',    help='Generate the HTML report', action='store_true')
-    main_parser.add_argument('--stats',   help='Generate stats', action='store_true')
-    main_parser.add_argument('--collect', help='Get the data from the Forem API', action='store_true')
-    main_parser.add_argument('--sleep',   help='How much to sleep between calls', type=int, default=0)
-    main_parser.add_argument('--host',    help='The hostname of the Forem site', required=True)
-    main_args, _ = main_parser.parse_known_args()
-    if not main_args.html and not main_args.collect and not main_args.stats:
-        main_parser.print_help()
-        exit()
-
-    parser = argparse.ArgumentParser(parents=[main_parser])
-    if main_args.collect:
-        parser.add_argument('--limit',     help='Max number of people to check', type=int, default=2)
-
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--html',    help='Generate the HTML report', action='store_true')
+    parser.add_argument('--stats',   help='Generate stats', action='store_true')
+    parser.add_argument('--collect', help='Get the data from the Forem API', action='store_true')
+    parser.add_argument('--sleep',   help='How much to sleep between calls', type=int, default=0)
+    parser.add_argument('--host',    help='The hostname of the Forem site', required=True)
+    parser.add_argument('--limit',   help='Max number of people to check', type=int, default=2)
     args = parser.parse_args()
+
+    if not args.html and not args.collect and not args.stats:
+        parser.print_help()
+        exit()
 
     return args
 
