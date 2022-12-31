@@ -19,7 +19,7 @@ def collect(host, limit, sleep):
     update_authors(host, limit, sleep)
 
 def fetch(host, url):
-    print(url)
+    print(f"fetch({host}, {url})")
     headers = {'Accept': 'application/vnd.forem.api-v1+json'}
 
     url = f"https://{host}{url}"
@@ -58,7 +58,7 @@ def update_authors(host, limit, sleep):
         #print(article["user"])
         uid = article["user"]["user_id"]
         username = article["user"]["username"]
-        print(f"{username} {uid}")
+        print(f"Author: username={username} uid={uid}")
 
         if uid not in articles_by_author:
             articles_by_author[uid] = []
@@ -102,7 +102,7 @@ def get_recent_articles(host, data):
             articles = json.load(fh)
 
     seen = set(article['id'] for article in articles)
-    print(seen)
+    # print(f"seen: {seen}")
 
     new_articles = []
     for article in recent_articles:
@@ -115,14 +115,17 @@ def get_recent_articles(host, data):
     for article in new_articles + articles:
         ts = datetime.datetime.strptime(f'{article["published_at"][0:-1]}+0000', '%Y-%m-%dT%H:%M:%S%z')
         elapsed_time = now-ts
-        if elapsed_time.seconds < 60 * 60 * 24:
+        if elapsed_time.total_seconds() < 60 * 60 * 24:
             articles_to_save.append(article)
+    articles_to_save.sort(key=lambda article: article["published_at"], reverse=True)
 
     with open(articles_file, 'w') as fh:
         json.dump(articles_to_save, fh)
     filename = time.strftime("stats-%Y-%m-%d--%H-%M-%S.json")
 
     print(f"newly added articles: {len(new_articles)}")
+
+    return
 
 def update_stats(host):
     data = pathlib.Path.cwd().joinpath('data', host)
@@ -135,9 +138,9 @@ def update_stats(host):
         ts = datetime.datetime.strptime(f'{article["published_at"][0:-1]}+0000', '%Y-%m-%dT%H:%M:%S%z')
         elapsed_time = now-ts
         #print(elapsed_time)
-        if elapsed_time.seconds < 60 * 60:
+        if elapsed_time.total_seconds() < 60 * 60:
             last_hour += 1
-        if elapsed_time.seconds < 60 * 60 * 24:
+        if elapsed_time.total_seconds() < 60 * 60 * 24:
             last_day += 1
     print(f"last_hour: {last_hour} last_day: {last_day}")
     line = json.dumps({'timestamp': str(now), 'last_hour': last_hour, 'last_day': last_day})
@@ -145,7 +148,7 @@ def update_stats(host):
         fh.write(f"{line}\n")
 
 def generate_html(host, title):
-    print("generate_html")
+    print(f"generate_html({host}, {title})")
     now = datetime.datetime.now(datetime.timezone.utc)
     today = now.replace(hour=0, minute=0, second=0, microsecond=0)
     # print(now)
