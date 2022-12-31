@@ -25,6 +25,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Build
+        env:
+          DEV_TO_API_KEY: ${{ secrets.DEV_TO_API_KEY }}
+          COMMUNITY_CODENEWBIE_ORG_API_KEY: ${{ secrets.COMMUNITY_CODENEWBIE_ORG_API_KEY }}
         run: |
           python report.py --collect --host community.codenewbie.org --stats --html --limit  100 --sleep 1
           python report.py --collect --host dev.to --stats --html --limit  100 --sleep 1
