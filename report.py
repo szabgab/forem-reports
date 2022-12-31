@@ -8,25 +8,21 @@ import pathlib
 import re
 from jinja2 import Environment, FileSystemLoader
 
-def collect(host, limit, sleep):
-    print(f"collect({host}, {limit})")
+def collect(host, limit, sleep, api_key):
+    print(f"collect({host}, {limit}, {sleep})")
 
     data = pathlib.Path.cwd().joinpath('data', host)
     if not data.exists():
         data.mkdir()
     print(f"Data dir: {data}")
-    get_recent_articles(host, data)
-    update_authors(host, limit, sleep)
+    get_recent_articles(host, data, api_key)
+    update_authors(host, limit, sleep, api_key)
 
-def fetch(host, url):
+def fetch(host, url, api_key):
     print(f"fetch({host}, {url})")
     headers = {'Accept': 'application/vnd.forem.api-v1+json'}
 
     url = f"https://{host}{url}"
-
-    env_variable = re.sub(r'\.', '_', host).upper() + "_API_KEY"
-    #print(f"env_variable: {env_variable}")
-    api_key = os.environ.get(env_variable)
 
     headers['api-key'] = api_key
 
@@ -37,7 +33,7 @@ def fetch(host, url):
         exit(1)
     return res.json()
 
-def update_authors(host, limit, sleep):
+def update_authors(host, limit, sleep, api_key):
     data = pathlib.Path.cwd().joinpath('data', host)
     with open(data.joinpath('articles.json')) as fh:
         articles = json.load(fh)
@@ -72,9 +68,9 @@ def update_authors(host, limit, sleep):
                 if user["article_count"] > 20:
                     continue
 
-        user = fetch(host, f'/api/users/{uid}')
+        user = fetch(host, f'/api/users/{uid}', api_key)
         #print(user)
-        user_articles = fetch(host, f'/api/articles?username={username}&page=1&per_page={per_page}')
+        user_articles = fetch(host, f'/api/articles?username={username}&page=1&per_page={per_page}', api_key)
         time.sleep(sleep)
         #print(len(user_articles))
         user["article_count"] = len(user_articles)
@@ -85,10 +81,10 @@ def update_authors(host, limit, sleep):
         if limit <= 0:
             break
 
-def get_recent_articles(host, data):
+def get_recent_articles(host, data, api_key):
     per_page = 100
 
-    recent_articles = fetch(host, f'/api/articles/latest?page=1&per_page={per_page}')
+    recent_articles = fetch(host, f'/api/articles/latest?page=1&per_page={per_page}', api_key)
 
     print(f"Number of elements in response: {len(recent_articles)}")
     if len(recent_articles) == 0:
@@ -240,6 +236,7 @@ def get_args():
     parser.add_argument('--sleep',   help='How much to sleep between calls', type=int, default=0)
     parser.add_argument('--host',    help='The hostname of the Forem site', required=True)
     parser.add_argument('--limit',   help='Max number of people to check', type=int, default=2)
+    parser.add_argument('--public',  help='No need for API_KEY', action='store_true')
     args = parser.parse_args()
 
     if not args.html and not args.collect and not args.stats:
@@ -259,7 +256,13 @@ def main():
         exit('Invalid host')
 
     if args.collect:
-        collect(args.host, args.limit, args.sleep)
+        env_variable = re.sub(r'\.', '_', args.host).upper() + "_API_KEY"
+        #print(f"env_variable: {env_variable}")
+        api_key = os.environ.get(env_variable)
+        if not args.public and api_key is None:
+            exit(f"Environment variable {env_variable} with the API key is missing you can get one from https://{args.host}/settings/extensions")
+
+        collect(args.host, args.limit, args.sleep, api_key)
 
     if args.stats:
         update_stats(args.host)
