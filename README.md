@@ -44,10 +44,13 @@ Unfortunately DEV does not have a special way to indicate the language of the po
 * People who signed up in the last D=2 days and have more than N=3 posts. Likely SPAM
 * People who signed up in the last D=2 days and have posted. These can be either SPAM or we might want to welcome them.
 
-## API keys
+## Add new sites:
 
 Get the API KEYs from the following URLs and add them to the [action secrets](https://github.com/szabgab/forem-reports/settings/secrets/actions) using the keys listed below:
 
 * https://dev.to/settings/extensions `DEV_TO_API_KEY`
 * https://community.codenewbie.org/settings/extensions `COMMUNITY_CODENEWBIE_ORG_API_KEY`
+
+* Update `.github/workflows/pages.yml` with the new key.
+* Update `report.py` the `hosts` mapping of hostname to title.
 
