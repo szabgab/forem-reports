@@ -9,15 +9,17 @@
       <th>Host</th>
       <th>Last hour</th>
       <th>Last day</th>
+      <th>URL</th>
     </tr>
   </thead>
 
   <tbody>
     {% for host in hosts.keys()  %}
     <tr>
-      <th><a href="/{{host}}/">{{hosts[host]}}</a></th>
-      <th>{{stats[host].last_hour}}</th>
-      <th>{{stats[host].last_day}}</th>
+      <td><a href="/{{host}}/">{{hosts[host]}}</a></td>
+      <td>{{stats[host].last_hour}}</td>
+      <td>{{stats[host].last_day}}</td>
+      <td><a href="https://{{host}}/">{{hosts[host]}}</a></td>
     </tr>
     {% endfor %}
   </tbody>
