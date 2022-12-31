@@ -24,10 +24,9 @@ def fetch(host, url):
 
     url = f"https://{host}{url}"
 
-    if host == 'dev.to':
-        api_key = os.environ.get('DEV_TO_API_KEY')
-    if host == 'community.codenewbie.org':
-        api_key = os.environ.get('COMMUNITY_CODENEWBIE_ORG_API_KEY')
+    env_variable = re.sub(r'\.', '_', host).upper() + "_API_KEY"
+    #print(f"env_variable: {env_variable}")
+    api_key = os.environ.get(env_variable)
 
     headers['api-key'] = api_key
 

@@ -46,8 +46,8 @@ Unfortunately DEV does not have a special way to indicate the language of the po
 
 ## API keys
 
-Get the API KEYS from and add them to the [action secrets](https://github.com/szabgab/forem-reports/settings/secrets/actions)
+Get the API KEYs from the following URLs and add them to the [action secrets](https://github.com/szabgab/forem-reports/settings/secrets/actions) using the keys listed below:
 
-* https://dev.to/settings/extensions
-* https://community.codenewbie.org/settings/extensions
+* https://dev.to/settings/extensions `DEV_TO_API_KEY`
+* https://community.codenewbie.org/settings/extensions `COMMUNITY_CODENEWBIE_ORG_API_KEY`
 
