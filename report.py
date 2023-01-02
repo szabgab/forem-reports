@@ -223,6 +223,7 @@ def generate_main_html(hosts):
     html_content = html_template.render(
         hosts = hosts,
         stats = stats,
+        title = 'Forem-based sites',
     )
 
     with open(html.joinpath('index.html'), 'w') as fh:
