@@ -273,6 +273,6 @@ def main():
     generate_main_html(hosts)
 
 if __name__ == "__main__":
-    now = datetime.datetime.now(datetime.timezone.utc)
+    now = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0)
     main()
 
