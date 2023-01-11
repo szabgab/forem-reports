@@ -105,7 +105,6 @@ def get_recent_articles(host, data, api_key):
             continue
         new_articles.append(article)
 
-    now = datetime.datetime.now(datetime.timezone.utc)
     articles_to_save = []
     for article in new_articles + articles:
         ts = datetime.datetime.strptime(f'{article["published_at"][0:-1]}+0000', '%Y-%m-%dT%H:%M:%S%z')
@@ -128,7 +127,6 @@ def update_stats(host):
         articles = json.load(fh)
     last_hour = 0
     last_day = 0
-    now = datetime.datetime.now(datetime.timezone.utc)
     for article in articles:
         ts = datetime.datetime.strptime(f'{article["published_at"][0:-1]}+0000', '%Y-%m-%dT%H:%M:%S%z')
         elapsed_time = now-ts
@@ -144,7 +142,6 @@ def update_stats(host):
 
 def generate_html(host, title):
     print(f"generate_html({host}, {title})")
-    now = datetime.datetime.now(datetime.timezone.utc)
     today = now.replace(hour=0, minute=0, second=0, microsecond=0)
     # print(now)
 
@@ -197,6 +194,7 @@ def generate_html(host, title):
         stats    = stats,
         host     = host,
         title    = title,
+        now      = now,
     )
     html_content = re.sub(r'^\s+', '', html_content, flags=re.MULTILINE)
 
@@ -224,6 +222,7 @@ def generate_main_html(hosts):
         hosts = hosts,
         stats = stats,
         title = 'Forem-based sites',
+        now = now,
     )
 
     with open(html.joinpath('index.html'), 'w') as fh:
@@ -273,5 +272,7 @@ def main():
 
     generate_main_html(hosts)
 
-main()
+if __name__ == "__main__":
+    now = datetime.datetime.now(datetime.timezone.utc)
+    main()
 
