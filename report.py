@@ -228,6 +228,9 @@ def generate_main_html(hosts):
     with open(html.joinpath('index.html'), 'w') as fh:
         fh.write(html_content)
 
+    # copy js file
+    shutil.copy('forem.js', html.joinpath('forem.js'))
+
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--html',    help='Generate the HTML report', action='store_true')
@@ -271,6 +274,7 @@ def main():
         generate_html(args.host, hosts[args.host])
 
     generate_main_html(hosts)
+
 
 if __name__ == "__main__":
     now = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0)
