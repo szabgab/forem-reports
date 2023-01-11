@@ -194,7 +194,7 @@ def generate_html(host, title):
         stats    = stats,
         host     = host,
         title    = title,
-        now      = now,
+        now      = now.strftime("%Y-%m-%d %H:%m:%S"),
     )
     html_content = re.sub(r'^\s+', '', html_content, flags=re.MULTILINE)
 
@@ -222,7 +222,7 @@ def generate_main_html(hosts):
         hosts = hosts,
         stats = stats,
         title = 'Forem-based sites',
-        now = now,
+        now = now.strftime("%Y-%m-%d %H:%m:%S"),
     )
 
     with open(html.joinpath('index.html'), 'w') as fh:
