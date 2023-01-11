@@ -8,8 +8,7 @@
         <div class="content">
         <div>Number of new articles in the last hour: {{stats.last_hour}}</div>
         <div>Number of new articles in the last day: {{stats.last_day}}</div>
-        <div>Last updated at UTC {{now}}</div>
-
+        <div>Last updated at UTC {{now.strftime("%Y-%m-%d %H:%m:%S")}} (<span class="localdate" x-utc="{{now}}"></span>)</div>
 
         </div>
 

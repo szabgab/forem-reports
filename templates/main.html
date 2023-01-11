@@ -25,8 +25,7 @@
   </tbody>
 </table>
 
-<div>Last updated at UTC {{now}}</div>
-<div>In your timezone <span class="localdate" x-utc="{{now}}"></span></div>
+<div>Last updated at UTC {{now.strftime("%Y-%m-%d %H:%m:%S")}} (<span class="localdate" x-utc="{{now}}"></span>)</div>
 
 <div>
 Check out the full list of <a href="https://discover.forem.com/">public Forem-based sites</a>.
